@@ -180,4 +180,4 @@ EXEC manage_reservations
 
 ##**Conclusion**
 
-This project provides a complete demonstration of core PL/SQL procedural programming concepts. Using collections, records, and GOTO statements, we built a simplified but realistic Restaurant Reservation Management System. The design and logic demonstrate how PL/SQL can improve performance and add flexibility when handling real-world data processing problems.
+This project provides a complete demonstration of core PL/SQL procedural programming concepts. Using collections,records, and GOTO statements, we built a simplified but realistic Restaurant Reservation Management System. The design and logic demonstrate how PL/SQL can improve performance and add flexibility when handling real-world data processing problems.
