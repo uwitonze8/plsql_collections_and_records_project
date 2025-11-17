@@ -1,9 +1,9 @@
 Student: Uwitonze Pacific  
-ID: (Add your Student ID)  
+ID: 26983  
 DEPARTMENT: Software Engineering  
 Course: Database Development with PL/SQL (INSY 8311)  
 Instructor: Eric Maniraguha  
-Date: (Add Submission Date)
+
 
 # PL/SQL PROJECT REPORT
 
