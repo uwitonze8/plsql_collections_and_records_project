@@ -78,7 +78,9 @@ CREATE TABLE reservations (
   is_available   CHAR(1)  -- 'Y' = Available, 'N' = Booked
 );
 
-## **2. Main PL/SQL Procedure **
+
+
+## **2. Main PL/SQL Procedure**
 
 CREATE OR REPLACE PROCEDURE manage_reservations IS
 
