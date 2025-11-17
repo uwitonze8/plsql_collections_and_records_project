@@ -78,7 +78,7 @@ CREATE TABLE reservations (
   is_available   CHAR(1)  -- 'Y' = Available, 'N' = Booked
 );
 
-2. Main PL/SQL Procedure
+## ** 2. Main PL/SQL Procedure
 
 CREATE OR REPLACE PROCEDURE manage_reservations IS
 
@@ -170,12 +170,12 @@ END;
 /
 
 
-3. Execution Command
+## **3. Execution Command
 
 SET SERVEROUTPUT ON;
 EXEC manage_reservations
 
 
-Conclusion
+## ** Conclusion
 
 This project provides a complete demonstration of core PL/SQL procedural programming concepts. Using collections, records, and GOTO statements, we built a simplified but realistic Restaurant Reservation Management System. The design and logic demonstrate how PL/SQL can improve performance and add flexibility when handling real-world data processing problems.
