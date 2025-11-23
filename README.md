@@ -1,11 +1,4 @@
-Student: Uwitonze Pacific  
-ID: 26983  
-DEPARTMENT: Software Engineering  
-Course: Database Development with PL/SQL (INSY 8311)  
-Instructor: Eric Maniraguha  
 
-
-# PL/SQL PROJECT REPORT
 
 ## PROJECT TITLE:
 Restaurant Reservation Management Using PL/SQL Collections, Records, and GOTO Statements
