@@ -1,183 +1,720 @@
-Student: Uwitonze Pacific  
-ID: 26983  
-DEPARTMENT: Software Engineering  
-Course: Database Development with PL/SQL (INSY 8311)  
-Instructor: Eric Maniraguha  
+# Pharmacy Management System
 
-
-# PL/SQL PROJECT REPORT
-
-## PROJECT TITLE:
-Restaurant Reservation Management Using PL/SQL Collections, Records, and GOTO Statements
+> A comprehensive PL/SQL Oracle Database project for automating pharmacy operations
 
 ---
 
-## **Introduction**
+## Student Information
 
-Restaurant reservation systems help streamline booking procedures, manage customer seating efficiently, and ensure smooth operations. Oracle PL/SQL combines SQL with procedural programming features, allowing developers to implement real-world business logic more effectively.
-
-This project demonstrates how to develop a simple **Restaurant Reservation Management System** using:
-
-- **PL/SQL Records** for structured data storage  
-- **PL/SQL Collections (Nested Tables)** for in-memory data manipulation  
-- **GOTO statements** for program flow control  
-- **BULK COLLECT** for optimized data retrieval  
-
-The program simulates checking table availability, inserting a new reservation, and displaying available tables using advanced PL/SQL concepts.
+| Field | Details |
+|-------|---------|
+| **Name** | Uwitonze Pacific |
+| **Student ID** | 26983 |
+| **Course** | Database Development with PL/SQL (INSY 8311) |
+| **Lecturer** | Eric Maniraguha |
+| **Academic Year** | 2024-2025 |
 
 ---
 
-## **Objectives**
+## Table of Contents
 
-This project aims to:
-
-1. Demonstrate the use of **Records** to group reservation attributes.
-2. Use **Collections (Nested Tables)** to process multiple reservation records.
-3. Include **GOTO statements** for conditional flow management (e.g., skipping booked tables).
-4. Integrate SQL and PL/SQL in building a working system.
-5. Apply **BULK COLLECT** for efficient data processing.
-
----
-
-## **Tools and Environment Used**
-
-| Tool / Software | Description |
-|------------------|-------------|
-| Oracle Database 21c | Database for PL/SQL execution |
-| SQL Developer / SQL*Plus | Environment for running PL/SQL scripts |
-| Windows 11 | Operating System |
-| DBMS_OUTPUT Package | Used to display program results |
+- [Introduction](#introduction)
+- [Project Phases](#project-phases)
+  - [Phase 1: Problem Statement](#phase-1-problem-statement)
+  - [Phase 2: Business Process Modeling](#phase-2-business-process-modeling)
+  - [Phase 3: Logical Model Design](#phase-3-logical-model-design)
+  - [Phase 4: Physical Database Implementation](#phase-4-physical-database-implementation)
+  - [Phase 5: Data Insertion](#phase-5-data-insertion)
+  - [Phase 6: Transaction Handling](#phase-6-transaction-handling)
+  - [Phase 7: Security Features & Auditing](#phase-7-security-features--auditing)
+  - [Phase 8: Reporting and Query Optimization](#phase-8-reporting-and-query-optimization)
+- [Tools & Technologies](#tools--technologies)
+- [Conclusion](#conclusion)
+- [Contact](#contact)
 
 ---
 
-# **Problem Definition**
+## Introduction
 
-Develop a Restaurant Reservation Management System that can:
+Modern pharmacies face increasing challenges due to manual processes that often result in prescription errors, inventory mismatches, delayed patient services, and data inconsistencies.
 
-- Store reservation data in a relational table  
-- Insert a new reservation only if a table is available  
-- Fetch all reservations into a collection  
-- Use a **GOTO statement** to skip booked tables  
-- Display only available tables  
+This project introduces a **Pharmacy Management System** built using Oracle Database and PL/SQL programming. The system provides:
 
-This demonstrates PL/SQL procedural capabilities in a real-world scenario.
+- Automation of prescription workflows
+- Real-time inventory tracking
+- Secure data management for prescriptions, inventory, and payments
+- Enhanced service delivery and operational efficiency
+
+The project was implemented in **eight phases**, covering everything from problem analysis and business modeling to logical design, implementation, testing, and reporting.
 
 ---
 
-# **1. Database Design**
+## Project Phases
 
-## **1.1 Table Creation**
+| Phase | Title | Description |
+|-------|-------|-------------|
+| 1 | Problem Statement | Identifying core pharmacy challenges and defining system requirements |
+| 2 | Business Process Modeling | Mapping essential workflows using BPMN diagrams |
+| 3 | Logical Model Design | Designing normalized database schema with entities and relationships |
+| 4 | Physical Database Implementation | Creating Oracle PDB, users, and privileges |
+| 5 | Data Insertion | Populating tables with realistic sample data |
+| 6 | Transaction Handling | Implementing procedures, functions, cursors, and packages |
+| 7 | Security Features | Implementing triggers, audit logging, and access controls |
+| 8 | Reporting & Optimization | Creating analytical queries and optimizing performance |
+
+---
+
+## Phase 1: Problem Statement
+
+### Problem Definition
+
+Pharmacies often face operational inefficiencies due to manual handling of prescriptions, outdated inventory tracking methods, and unstructured patient records. These issues contribute to:
+
+- Medication errors and mismatched prescriptions
+- Delays in patient service
+- Out-of-stock problems
+- Lost revenue due to poor billing and payment tracking
+
+### Context
+
+This Pharmacy Management System is designed for community and hospital-based pharmacies where data integrity, automation, and quick access to patient information are critical.
+
+### Target Users
+
+| User | Role |
+|------|------|
+| **Pharmacists** | Manage inventory, fulfill prescriptions |
+| **Doctors** | Issue prescriptions |
+| **Patients** | Receive medication, view history |
+| **Managers** | View analytics, track performance |
+
+### Project Goals
+
+- Automate prescription workflows
+- Track inventory levels and alert on low stock
+- Ensure data integrity and security
+- Provide actionable insights through reporting
+
+---
+
+## Phase 2: Business Process Modeling
+
+### Scope & Objectives
+
+- **Scope:** Prescription lifecycle, from doctor's order through dispensing and billing
+- **Objective:** Create a clear, visual model (using BPMN) that shows every actor, decision point, and system action
+
+### Actors & Their Roles
+
+| Actor | Responsibilities |
+|-------|------------------|
+| **Doctor** | Issues prescriptions to patients |
+| **Patient** | Receives prescription and requests medication |
+| **Pharmacist** | Validates prescription, dispenses medicine, initiates billing |
+| **System** | Checks stock, updates inventory, processes payment, sends alerts |
+
+### Key Workflows
+
+1. **Prescription Issuance** - Doctor prescribes medicine to patient
+2. **Validation & Verification** - Pharmacist retrieves order, checks completeness; system verifies patient eligibility
+3. **Stock Check** - System confirms medicine availability; triggers alerts if out of stock
+4. **Dispensing & Billing** - Pharmacist dispenses medicine; system calculates cost and issues receipt
+5. **Inventory Update & Notification** - System deducts dispensed quantity; alerts sent if stock falls below threshold
+
+### Swimlane Responsibilities
+
+- **Doctor Lane:** Creates and submits electronic prescriptions
+- **Patient Lane:** Receives notifications, provides additional info (e.g., insurance details)
+- **Pharmacist Lane:** Validates prescriptions, dispenses medicine, confirms payment
+- **System Lane:** Checks stock, updates inventory, processes payments, sends alerts
+
+### BPMN Diagram
+
+![BPMN Diagram](https://github.com/user-attachments/assets/369fad35-ecac-46dc-90aa-0fb89659e728)
+
+### Logical Flow
+
+```
+Start → Doctor logs in → Enters prescription
+      → System checks patient record
+          ├─ Invalid → Notify pharmacist → End
+          └─ Valid → Pharmacist verifies details
+                   → System checks stock
+                       ├─ Not available → Send low-stock alert
+                       └─ Available → Pharmacist dispenses medicine
+                                    → System records transaction
+                                    → System updates inventory
+                                    → System processes payment
+                                    → Patient notified → End
+```
+
+---
+
+## Phase 3: Logical Model Design
+
+### Entities and Attributes
+
+#### 1. Doctor
+| Attribute | Description |
+|-----------|-------------|
+| `Doctor_ID` (PK) | Unique identifier |
+| `Name` | Full name |
+| `Specialization` | Medical specialty |
+| `Contact_Info` | Phone/address |
+| `License_Number` | Medical license |
+
+#### 2. Patient
+| Attribute | Description |
+|-----------|-------------|
+| `Patient_ID` (PK) | Unique identifier |
+| `Name` | Full name |
+| `DOB` | Date of birth |
+| `Address` | Physical address |
+| `Phone`, `Email` | Contact details |
+| `Insurance_Info` | Insurance details |
+| `Medical_History` | Health records |
+
+#### 3. Medicine
+| Attribute | Description |
+|-----------|-------------|
+| `Medicine_ID` (PK) | Unique identifier |
+| `Name` | Medicine name |
+| `Description` | Details |
+| `Manufacturer` | Producer |
+| `Category` | Drug category |
+| `Unit_Price` | Price per unit |
+| `Current_Stock` | Available quantity |
+| `Reorder_Level` | Minimum threshold |
+| `Expiry_Date` | Expiration date |
+
+#### 4. Prescription
+| Attribute | Description |
+|-----------|-------------|
+| `Prescription_ID` (PK) | Unique identifier |
+| `Doctor_ID` (FK) | Prescribing doctor |
+| `Patient_ID` (FK) | Patient receiving prescription |
+| `Issue_Date` | Date issued |
+| `Status` | NEW/VALIDATED/DISPENSED/COMPLETED |
+
+#### 5. Prescription_Items
+| Attribute | Description |
+|-----------|-------------|
+| `Item_ID` (PK) | Unique identifier |
+| `Prescription_ID` (FK) | Parent prescription |
+| `Medicine_ID` (FK) | Medicine prescribed |
+| `Dosage` | Dosage instructions |
+| `Quantity` | Amount prescribed |
+| `Instructions` | Special instructions |
+
+#### 6. Pharmacist
+| Attribute | Description |
+|-----------|-------------|
+| `Pharmacist_ID` (PK) | Unique identifier |
+| `Name` | Full name |
+| `License_Number` | Pharmacy license |
+| `Contact_Info` | Contact details |
+| `Shift_Hours` | Working hours |
+
+#### 7. Dispensed_Medicines
+| Attribute | Description |
+|-----------|-------------|
+| `Dispensed_ID` (PK) | Unique identifier |
+| `Prescription_ID` (FK) | Prescription dispensed |
+| `Pharmacist_ID` (FK) | Dispensing pharmacist |
+| `Dispensing_Date` | Date dispensed |
+
+#### 8. Payment
+| Attribute | Description |
+|-----------|-------------|
+| `Payment_ID` (PK) | Unique identifier |
+| `Prescription_ID` (FK) | Related prescription |
+| `Amount` | Payment amount |
+| `Payment_Date` | Transaction date |
+| `Payment_Method` | Cash/Card/Insurance |
+| `Status` | PENDING/COMPLETED |
+
+#### 9. Inventory_Log
+| Attribute | Description |
+|-----------|-------------|
+| `Log_ID` (PK) | Unique identifier |
+| `Medicine_ID` (FK) | Medicine involved |
+| `Transaction_Type` | ADD/DEDUCT/ADJUST |
+| `Quantity` | Amount changed |
+| `Transaction_Date` | Date of transaction |
+
+### Entity Relationships
+
+```
+Doctor (1) ─────────< (M) Prescription
+Patient (1) ────────< (M) Prescription
+Prescription (1) ───< (M) Prescription_Items
+Medicine (1) ───────< (M) Prescription_Items
+Pharmacist (1) ─────< (M) Dispensed_Medicines
+Prescription (1) ───○ (1) Dispensed_Medicines
+Prescription (1) ───○ (1) Payment
+Medicine (1) ───────< (M) Inventory_Log
+```
+
+### Normalization
+
+- **1NF:** All tables have primary keys with atomic values
+- **2NF:** All non-key attributes are fully dependent on primary key
+- **3NF:** No transitive dependencies; junction tables handle M:M relationships
+- **Referential Integrity:** Foreign key constraints ensure data consistency
+
+### ERD Diagram
+
+![ERD Diagram](https://github.com/user-attachments/assets/0fcfe21a-797a-47fc-a5f0-0571ef34cc2f)
+
+---
+
+## Phase 4: Physical Database Implementation
+
+### Database Configuration
+
+| Property | Value |
+|----------|-------|
+| **Database Name** | `mon_26983_pacific_pharmacy_db` |
+| **Platform** | Oracle 19c |
+| **Tool** | SQL Developer |
+
+### Setup Steps
+
+#### 1. Create Pluggable Database
 
 ```sql
-CREATE TABLE reservations (
-  reservation_id NUMBER PRIMARY KEY,
-  customer_name  VARCHAR2(100),
-  table_number   NUMBER,
-  guests         NUMBER,
-  reserved_date  DATE,
-  is_available   CHAR(1)  -- 'Y' = Available, 'N' = Booked
+CREATE PLUGGABLE DATABASE mon_26983_pacific_pharmacy_db
+ADMIN USER pacific IDENTIFIED BY pacific
+FILE_NAME_CONVERT=(
+    'C:\ORACLE21\ORADATA\ORCL\PDBseed\',
+    'C:\ORACLE21\ORADATA\ORCL\mon_26983_pacific_pharmacy_db\'
 );
+```
 
+#### 2. Open the PDB
 
+```sql
+ALTER PLUGGABLE DATABASE mon_26983_pacific_pharmacy_db OPEN;
+```
 
-## **2. Main PL/SQL Procedure**
+#### 3. Save the PDB State
 
-CREATE OR REPLACE PROCEDURE manage_reservations IS
+```sql
+ALTER PLUGGABLE DATABASE mon_26983_pacific_pharmacy_db SAVE STATE;
+```
 
-  -- Record for storing reservation details
-  TYPE reservation_rec IS RECORD (
-      reservation_id reservations.reservation_id%TYPE,
-      customer_name  reservations.customer_name%TYPE,
-      table_number   reservations.table_number%TYPE,
-      guests         reservations.guests%TYPE,
-      reserved_date  reservations.reserved_date%TYPE,
-      is_available   reservations.is_available%TYPE
-  );
+#### 4. Set Session Container
 
-  -- Collection of reservation records
-  TYPE reservation_table IS TABLE OF reservation_rec;
-  reservation_list reservation_table;
+```sql
+ALTER SESSION SET CONTAINER = mon_26983_pacific_pharmacy_db;
+```
 
-  -- Cursor to fetch all reservations
-  CURSOR res_cursor IS
-      SELECT reservation_id, customer_name, table_number, guests, reserved_date, is_available
-      FROM reservations;
+#### 5. Create User and Grant Privileges
 
-  -- Variables for inserting new reservation
-  v_new_id NUMBER := 6;
-  v_new_name VARCHAR2(100) := 'Uwitonze Pacific';
-  v_new_table NUMBER := 2;  -- Trying to reserve a table that may be booked
-  v_guests NUMBER := 3;
+```sql
+CREATE USER pharmacy_user IDENTIFIED BY pharmacy_pass;
+GRANT CONNECT, RESOURCE, DBA TO pharmacy_user;
+```
 
-  v_count NUMBER;
+### Monitoring
 
+Oracle Enterprise Manager (OEM) was configured for:
+- Real-time performance monitoring
+- Activity logging
+- Resource utilization tracking
+
+### Screenshots
+
+![PDB Creation](https://github.com/user-attachments/assets/cf5590ec-edaf-446c-a501-df076f67469e)
+
+![OEM Dashboard](https://github.com/user-attachments/assets/a7412f94-637f-4942-8ce5-ad4faf993d62)
+
+---
+
+## Phase 5: Data Insertion
+
+### Sample Data Overview
+
+Realistic sample records were inserted into all tables to validate constraints and simulate real-world operations.
+
+### Doctors
+
+```sql
+INSERT INTO doctor VALUES (seq_doctor_id.NEXTVAL, 'Dr. Jean Baptiste Uwimana',
+    'General Medicine', 'MD-RW-2020-001', '+250788123456', 'jb.uwimana@hospital.rw', SYSDATE);
+INSERT INTO doctor VALUES (seq_doctor_id.NEXTVAL, 'Dr. Marie Claire Mukamana',
+    'Pediatrics', 'MD-RW-2021-045', '+250788234567', 'mc.mukamana@clinic.rw', SYSDATE);
+INSERT INTO doctor VALUES (seq_doctor_id.NEXTVAL, 'Dr. Paul Kagame',
+    'Cardiology', 'MD-RW-2019-012', '+250788345678', 'p.kagame@cardio.rw', SYSDATE);
+INSERT INTO doctor VALUES (seq_doctor_id.NEXTVAL, 'Dr. Alice Uwase',
+    'Dermatology', 'MD-RW-2022-078', '+250788456789', 'a.uwase@skin.rw', SYSDATE);
+INSERT INTO doctor VALUES (seq_doctor_id.NEXTVAL, 'Dr. Eric Nshimyumuremyi',
+    'Neurology', 'MD-RW-2018-033', '+250788567890', 'e.nshimyumuremyi@neuro.rw', SYSDATE);
+```
+
+### Medicines
+
+```sql
+INSERT INTO medicine VALUES (seq_medicine_id.NEXTVAL, 'Paracetamol 500mg',
+    'Pain and fever relief', 'Rwanda Pharma', 'Analgesic', 500, 1000, 100,
+    TO_DATE('2025-12-31', 'YYYY-MM-DD'), SYSDATE);
+INSERT INTO medicine VALUES (seq_medicine_id.NEXTVAL, 'Amoxicillin 250mg',
+    'Antibiotic capsule', 'Kigali Pharmaceuticals', 'Antibiotic', 1200, 500, 50,
+    TO_DATE('2025-06-30', 'YYYY-MM-DD'), SYSDATE);
+INSERT INTO medicine VALUES (seq_medicine_id.NEXTVAL, 'Ibuprofen 400mg',
+    'Anti-inflammatory pain relief', 'East Africa Pharma', 'NSAID', 800, 750, 75,
+    TO_DATE('2026-03-15', 'YYYY-MM-DD'), SYSDATE);
+-- Additional medicines...
+```
+
+### Prescriptions
+
+```sql
+INSERT INTO prescription VALUES (seq_prescription_id.NEXTVAL, 1001, 10001,
+    TO_DATE('2023-01-05', 'YYYY-MM-DD'), 'COMPLETED', 'Fever and headache', NULL);
+INSERT INTO prescription VALUES (seq_prescription_id.NEXTVAL, 1002, 10002,
+    TO_DATE('2023-01-10', 'YYYY-MM-DD'), 'DISPENSED', 'Childhood vaccination follow-up', NULL);
+INSERT INTO prescription VALUES (seq_prescription_id.NEXTVAL, 1003, 10003,
+    TO_DATE('2023-01-15', 'YYYY-MM-DD'), 'VALIDATED', 'Diabetes management',
+    'Monitor blood sugar levels');
+-- Additional prescriptions...
+```
+
+### Data Integrity Measures
+
+- **Validation Constraints:** CHECK, NOT NULL, UNIQUE applied
+- **Referential Integrity:** Foreign keys enforced
+- **Sequences:** Used for auto-generating primary keys
+
+---
+
+## Phase 6: Transaction Handling
+
+### Package Specification
+
+```sql
+CREATE OR REPLACE PACKAGE pharmacy_pkg AS
+    -- Cursor: Active prescriptions
+    CURSOR c_active_prescriptions IS
+        SELECT p.prescription_id, p.issue_date, p.status,
+               d.name AS doctor_name, pt.name AS patient_name
+        FROM prescription p
+        JOIN doctor d ON p.doctor_id = d.doctor_id
+        JOIN patient pt ON p.patient_id = pt.patient_id
+        WHERE p.status IN ('NEW', 'VALIDATED', 'DISPENSED');
+
+    -- Cursor: Low stock medicines
+    CURSOR c_low_stock_medicines IS
+        SELECT medicine_id, name, current_stock, reorder_level
+        FROM medicine
+        WHERE current_stock <= reorder_level;
+
+    -- Procedure: Process prescription
+    PROCEDURE process_prescription(
+        p_prescription_id IN NUMBER,
+        p_action IN VARCHAR2,
+        p_result OUT VARCHAR2
+    );
+
+    -- Function: Calculate prescription total
+    FUNCTION calculate_prescription_total(
+        p_prescription_id IN NUMBER
+    ) RETURN NUMBER;
+
+    -- Procedure: Generate inventory report
+    PROCEDURE generate_inventory_report(
+        p_start_date IN DATE DEFAULT NULL,
+        p_end_date IN DATE DEFAULT NULL,
+        p_report OUT SYS_REFCURSOR
+    );
+
+    -- Procedure: Get patient prescription history
+    PROCEDURE get_patient_history(
+        p_patient_id IN NUMBER,
+        p_history OUT SYS_REFCURSOR
+    );
+END pharmacy_pkg;
+/
+```
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Stored Procedures** | Issue prescriptions, process payments, generate reports |
+| **Functions** | Calculate totals, fetch prescription details, rankings |
+| **Cursors** | Iterate through prescriptions and inventory |
+| **Exception Handling** | Handle duplicates, invalid inputs, stock issues |
+| **Packages** | Group related business logic (billing, inventory) |
+| **Window Functions** | ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, PARTITION BY |
+
+### Window Functions Implemented (Phase VI Requirement)
+
+The system includes comprehensive window function examples:
+
+**1. ROW_NUMBER()** - Sequential numbering of prescriptions per patient
+```sql
+ROW_NUMBER() OVER (PARTITION BY patient_id ORDER BY issue_date DESC)
+```
+
+**2. RANK() & DENSE_RANK()** - Ranking doctors by prescription count
+```sql
+RANK() OVER (ORDER BY COUNT(prescription_id) DESC)
+DENSE_RANK() OVER (PARTITION BY category ORDER BY revenue DESC)
+```
+
+**3. LAG() & LEAD()** - Compare current/previous inventory transactions
+```sql
+LAG(quantity, 1) OVER (PARTITION BY medicine_id ORDER BY date)
+LEAD(amount) OVER (ORDER BY payment_date)
+```
+
+**4. Aggregates with OVER** - Running totals and moving averages
+```sql
+SUM(amount) OVER (ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+AVG(revenue) OVER (ORDER BY date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW)
+```
+
+**5. NTILE()** - Categorize medicines into quartiles
+**6. PERCENT_RANK()** - Percentile ranking of pharmacists
+**7. RATIO_TO_REPORT()** - Calculate percentage of total revenue
+
+See [queries/window_functions.sql](queries/window_functions.sql) for 14 complete examples.
+
+---
+
+## Phase 7: Security Features & Auditing
+
+### Triggers
+
+#### Dispensing Trigger
+
+```sql
+CREATE OR REPLACE TRIGGER trg_dispense_medicine
+AFTER INSERT ON dispensed_medicines
+FOR EACH ROW
+DECLARE
+    v_prescription_status VARCHAR2(20);
+    v_items NUMBER;
+    v_current_stock NUMBER;
 BEGIN
+    -- Check prescription status
+    SELECT status INTO v_prescription_status FROM prescription
+    WHERE prescription_id = :NEW.prescription_id;
 
- INSERT NEW RESERVATION SECTION
- 
+    -- Check if prescription has items
+    SELECT COUNT(*) INTO v_items FROM prescription_items
+    WHERE prescription_id = :NEW.prescription_id;
 
-  SELECT COUNT(*) INTO v_count 
-  FROM reservations 
-  WHERE table_number = v_new_table AND is_available = 'N';
-
-  -- If table is booked → skip insert
-  IF v_count > 0 THEN
-    DBMS_OUTPUT.PUT_LINE('Table ' || v_new_table || ' is already booked!');
-    GOTO skip_insert;
-  END IF;
-
-  -- Insert reservation
-  INSERT INTO reservations (reservation_id, customer_name, table_number, guests, reserved_date, is_available)
-  VALUES (v_new_id, v_new_name, v_new_table, v_guests, SYSDATE, 'N');
-  
-  COMMIT;
-
-  DBMS_OUTPUT.PUT_LINE('New reservation added for ' || v_new_name);
-
-  <<skip_insert>>
-  NULL;
-
-   DISPLAY AVAILABLE TABLES SECTION
-  
-
-  OPEN res_cursor;
-  FETCH res_cursor BULK COLLECT INTO reservation_list;
-  CLOSE res_cursor;
-
-  DBMS_OUTPUT.PUT_LINE(' ');
-  DBMS_OUTPUT.PUT_LINE('===== AVAILABLE TABLES =====');
-
-  FOR i IN 1 .. reservation_list.COUNT LOOP
-
-    -- Skip booked tables
-    IF reservation_list(i).is_available = 'N' THEN
-      GOTO skip_table;
+    -- Validation checks
+    IF v_prescription_status != 'VALIDATED' THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Cannot dispense - prescription not validated');
+    ELSIF v_items = 0 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Cannot dispense - no items in prescription');
     END IF;
 
-    DBMS_OUTPUT.PUT_LINE('Table: ' || reservation_list(i).table_number ||
-                         ' | Customer: ' || reservation_list(i).customer_name ||
-                         ' | Guests: ' || reservation_list(i).guests);
+    -- Update prescription status
+    UPDATE prescription SET status = 'DISPENSED'
+    WHERE prescription_id = :NEW.prescription_id;
 
-    <<skip_table>>
-    NULL;
+    -- Process each medicine item and update stock
+    FOR item IN (SELECT medicine_id, quantity FROM prescription_items
+                WHERE prescription_id = :NEW.prescription_id)
+    LOOP
+        SELECT current_stock INTO v_current_stock FROM medicine
+        WHERE medicine_id = item.medicine_id;
 
-  END LOOP;
+        IF v_current_stock < item.quantity THEN
+            RAISE_APPLICATION_ERROR(-20003,
+                'Insufficient stock for medicine ID ' || item.medicine_id);
+        END IF;
 
-  DBMS_OUTPUT.PUT_LINE('===== END OF AVAILABLE TABLES =====');
-
-EXCEPTION
-  WHEN OTHERS THEN
-    DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        UPDATE medicine
+        SET current_stock = current_stock - item.quantity
+        WHERE medicine_id = item.medicine_id;
+    END LOOP;
 END;
 /
+```
+
+### Security Features
+
+| Feature | Purpose |
+|---------|---------|
+| **Auto Stock Update** | Trigger deducts inventory on dispensing |
+| **Weekday/Holiday Restriction** | Blocks INSERT/UPDATE/DELETE on weekdays (Mon-Fri) and holidays |
+| **Audit Logging** | Tracks all data modifications with ALLOWED/DENIED status |
+| **Expired Medicine Prevention** | Blocks dispensing of expired medications |
+| **Low Stock Alerts** | Automatic alerts when inventory falls below threshold |
+
+### Weekday/Holiday Restriction (Phase VII Critical Requirement)
+
+**Business Rule:** Employees CANNOT perform INSERT/UPDATE/DELETE operations:
+- On **WEEKDAYS** (Monday-Friday)
+- On **PUBLIC HOLIDAYS** (upcoming month)
+
+**Implementation:**
+1. **Holiday Table:** Stores public holidays with date and recurrence info
+2. **Restriction Function:** `is_restricted_time()` checks current day and holiday status
+3. **Audit Logging Function:** `log_restriction_attempt()` records all attempts
+4. **Restriction Triggers:**
+   - `trg_restrict_prescription` - Blocks prescription modifications
+   - `trg_restrict_payment` - Blocks payment modifications
+
+**Trigger Logic:**
+```sql
+-- Block if WEEKDAY (Mon-Fri)
+IF v_day IN ('MON', 'TUE', 'WED', 'THU', 'FRI') THEN
+    -- Log DENIED and raise error
+    RAISE_APPLICATION_ERROR(-20010, 'Operations not allowed on weekdays');
+END IF;
+
+-- Block if PUBLIC HOLIDAY
+IF v_is_holiday > 0 THEN
+    -- Log DENIED and raise error
+    RAISE_APPLICATION_ERROR(-20011, 'Operations not allowed on holidays');
+END IF;
+
+-- Otherwise ALLOW (Weekend, non-holiday)
+```
+
+### Audit Table Structure
+
+| Column | Description |
+|--------|-------------|
+| `User_ID` | User performing action |
+| `Action_Date` | Timestamp of action |
+| `Operation` | INSERT/UPDATE/DELETE |
+| `Table_Name` | Affected table |
+| `Status` | **ALLOWED** or **DENIED** |
+| `Old_Value` | Previous data |
+| `New_Value` | Updated data / Denial reason |
+
+### Audit Screenshot
+
+![Audit Log](https://github.com/user-attachments/assets/4e8d0e5a-be14-4ce1-9bcc-713271accc28)
+
+---
+
+## Phase 8: Reporting and Query Optimization
+
+### Analytical Queries
+
+#### Low Stock Alert
+
+```sql
+SELECT medicine_id, name, current_stock, reorder_level,
+       (reorder_level - current_stock) AS shortage
+FROM medicine
+WHERE current_stock <= reorder_level
+ORDER BY shortage DESC;
+```
+
+#### Daily Revenue Summary
+
+```sql
+SELECT TRUNC(payment_date) AS date,
+       COUNT(*) AS transactions,
+       SUM(amount) AS total_revenue
+FROM payment
+WHERE status = 'COMPLETED'
+GROUP BY TRUNC(payment_date)
+ORDER BY date DESC;
+```
+
+#### Sales by Doctor
+
+```sql
+SELECT d.name AS doctor_name,
+       COUNT(p.prescription_id) AS prescriptions,
+       SUM(pay.amount) AS total_revenue
+FROM doctor d
+JOIN prescription p ON d.doctor_id = p.doctor_id
+JOIN payment pay ON p.prescription_id = pay.prescription_id
+GROUP BY d.name
+ORDER BY total_revenue DESC;
+```
+
+### Performance Optimization
+
+- Indexed commonly queried columns (IDs, dates, status fields)
+- Created composite indexes for JOIN operations
+- Analyzed execution plans for query tuning
+
+### Repository Contents
+
+```
+mon_26983_pacific_uwitonze_pharmacy_management_system_db/
+├── database/
+│   ├── scripts/
+│   │   ├── 00_setup_pdb_simple.sql      # PDB creation script
+│   │   ├── 01_create_tables.sql         # DDL: Tables, sequences, indexes (incl. holiday table)
+│   │   ├── 02_insert_data.sql           # DML: Basic sample data
+│   │   ├── 02_insert_data_expanded.sql  # DML: 100-500 rows per table
+│   │   ├── 02_insert_holidays.sql       # Holiday data for restrictions
+│   │   ├── 03_procedures.sql            # Packages, procedures, functions (incl. window functions)
+│   │   ├── 04_triggers.sql              # Database triggers (incl. weekday/holiday restriction)
+│   │   └── 05_test_restrictions.sql     # Test script for Phase VII requirements
+│   └── documentation/
+│       └── README.md                    # Database setup guide
+├── documentation/
+│   ├── data_dictionary.md               # Complete data dictionary
+│   ├── architecture.md                  # System architecture
+│   ├── design_decisions.md              # Design rationale
+│   └── erd_diagram.md                   # ERD diagrams (Mermaid & ASCII)
+├── business_intelligence/
+│   ├── bi_requirements.md               # BI requirements specification
+│   ├── dashboards.md                    # Dashboard designs & SQL
+│   └── kpi_definitions.md               # KPI definitions & formulas
+├── queries/
+│   ├── data_retrieval.sql               # Operational queries
+│   ├── analytics_queries.sql            # Business analytics queries
+│   ├── audit_queries.sql                # Security & compliance queries
+│   └── window_functions.sql             # Window function examples (Phase VI)
+├── screenshots/
+│   ├── README.md                        # Screenshot checklist (38 items)
+│   └── screenshot_queries.sql           # Queries for taking screenshots
+└── README.md                            # This file
+```
+
+---
+
+## Tools & Technologies
+
+| Category | Tools |
+|----------|-------|
+| **Database** | Oracle 19c |
+| **Language** | PL/SQL |
+| **IDE** | SQL Developer |
+| **Modeling** | Draw.io, Lucidchart |
+| **Monitoring** | Oracle Enterprise Manager |
+| **Documentation** | GitHub, PowerPoint |
+| **Version Control** | Git |
+
+---
+
+## Conclusion
+
+The Pharmacy Management System demonstrates how database-driven automation can resolve real-world inefficiencies in pharmaceutical services. Key achievements include:
+
+- **Automated Workflows:** Streamlined prescription processing from issuance to dispensing
+- **Inventory Control:** Real-time stock tracking with low-stock alerts
+- **Data Security:** Comprehensive audit logging and access controls
+- **Operational Efficiency:** Reduced errors and improved service delivery
+
+This project showcases the power of **PL/SQL programming** combined with thoughtful database design, providing a practical solution for pharmacy digital transformation.
+
+---
+
+## Contact
+
+**Uwitonze Pacific**
+
+| Platform | Contact |
+|----------|---------|
+| Email | pacific.uwitonze112@gmail.com |
 
 
-## **3. Execution Command**
+---
 
-SET SERVEROUTPUT ON;
-EXEC manage_reservations
-
-
-##**Conclusion**
-
-This project provides a complete demonstration of core PL/SQL procedural programming concepts. Using collections,records, and GOTO statements, we built a simplified but realistic Restaurant Reservation Management System. The design and logic demonstrate how PL/SQL can improve performance and add flexibility when handling real-world data processing problems.
+> *"Whatever you do, work at it with all your heart, as working for the Lord, not for human masters."* — **Colossians 3:23**
