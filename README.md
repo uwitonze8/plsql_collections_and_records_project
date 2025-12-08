@@ -18,21 +18,7 @@
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Project Phases](#project-phases)
-  - [Phase 1: Problem Statement](#phase-1-problem-statement)
-  - [Phase 2: Business Process Modeling](#phase-2-business-process-modeling)
-  - [Phase 3: Logical Model Design](#phase-3-logical-model-design)
-  - [Phase 4: Physical Database Implementation](#phase-4-physical-database-implementation)
-  - [Phase 5: Data Insertion](#phase-5-data-insertion)
-  - [Phase 6: Transaction Handling](#phase-6-transaction-handling)
-  - [Phase 7: Security Features & Auditing](#phase-7-security-features--auditing)
-  - [Phase 8: Reporting and Query Optimization](#phase-8-reporting-and-query-optimization)
-- [Tools & Technologies](#tools--technologies)
-- [Conclusion](#conclusion)
-- [Contact](#contact)
 
----
 
 ## Introduction
 
