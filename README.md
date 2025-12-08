@@ -302,12 +302,6 @@ CREATE USER pharmacy_user IDENTIFIED BY pharmacy_pass;
 GRANT CONNECT, RESOURCE, DBA TO pharmacy_user;
 ```
 
-### Monitoring
-
-Oracle Enterprise Manager (OEM) was configured for:
-- Real-time performance monitoring
-- Activity logging
-- Resource utilization tracking
 
 ### Screenshots
 
