@@ -1,6 +1,3 @@
-# Pharmacy Management System
-
-> A comprehensive PL/SQL Oracle Database project for automating pharmacy operations
 
 ---
 
