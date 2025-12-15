@@ -4,7 +4,7 @@
 
 ---
 
-## Student Information
+
 
 | Field | Details |
 |-------|---------|
