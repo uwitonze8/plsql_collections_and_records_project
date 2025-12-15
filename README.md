@@ -1,4 +1,4 @@
-# Pharmacy Management System final project in pl
+
 
 > A comprehensive PL/SQL Oracle Database project for automating pharmacy operations
 
