@@ -615,13 +615,7 @@ GROUP BY d.name
 ORDER BY total_revenue DESC;
 ```
 
-### Performance Optimization
 
-- Indexed commonly queried columns (IDs, dates, status fields)
-- Created composite indexes for JOIN operations
-- Analyzed execution plans for query tuning
-
-### Repository Contents
 
 ```
 mon_26983_pacific_uwitonze_pharmacy_management_system_db/
